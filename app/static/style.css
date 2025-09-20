@@ -124,3 +124,7 @@
     font-size: 1.3rem;
     margin-right: 10px;
 }
+
+#hidden_id {
+    font-size: 0px;
+}

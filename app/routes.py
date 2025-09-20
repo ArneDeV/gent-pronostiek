@@ -88,14 +88,14 @@ def login():
             return redirect(url_for("login"))
         else:
             login_user(user, remember=form.remember_me.data)
-            return redirect(url_for("stand"))
+            return redirect(url_for("matches"))
     return render_template("login.html", title="Sign In", form=form)
 
 
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("stand"))
+    return redirect(url_for("matches"))
 
 
 @app.route("/pronostiek/<int:match_id>", methods=["GET", "POST"])
@@ -160,7 +160,7 @@ def update_pronostiek(prono_id):
     home_score = data.get("home_score")
     away_score = data.get("away_score")
 
-    pred = db.session.get(prono_id)
+    pred = db.session.get(Prediction, prono_id)
     if pred is None:
         flash("Error: Pronostiek niet gevonden")
         return {"success": False, "error": "Prediction not found"}, 404
@@ -168,7 +168,8 @@ def update_pronostiek(prono_id):
     pred.predicted_home_score = home_score
     pred.predicted_away_score = away_score
     db.session.commit()
-    return redirect(url_for("matches"))
+    flash(f"Pronostiek is geüpdatet naar {home_score} - {away_score}")
+    return {"success": True}
 
 
 # ! Admin pages hieronder
@@ -251,7 +252,7 @@ def admin_matches():
         db.session.add(match)
         db.session.commit()
 
-        return redirect(url_for("admin_matches"))
+        #return redirect(url_for("admin_matches"))
 
     # Get all matches
     matchesDB = db.session.scalars(sa.select(Match).order_by(Match.match_date)).all()
@@ -267,7 +268,7 @@ def admin_matches():
         )
         for match in matchesDB
     ]
-    print(matches)
+    #print(matches)
     return render_template(
         "admin_matches.html", title="Admin Matches", form=form, matches=matches
     )
@@ -297,7 +298,6 @@ def edit_match(match_id):
                 )
                 db.session.delete(match)
                 db.session.commit()
-                print("test")
                 return redirect(url_for("admin_matches"))
             else:
                 flash("Error: Confirm deletion checkbox not checked.")

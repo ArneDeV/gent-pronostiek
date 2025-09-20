@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Edit pronostiek</h1>
+<h1>Edit pronostiek<span id="hidden_id">{{ own_pred.id }}</span></h1>
 <!-- Aanpassing pronostiek -->
 <div class="center-container">
     <div class="match-card">
@@ -18,7 +18,8 @@
                 <span id="away-score">{{ own_pred.predicted_away_score }}</span>
             </div>
             <div class="team">
-                <img src="{{ url_for('static', filename='images/' + match.away_team.logo_url) }}" alt="{{ match.away_team.name }} Logo">
+                <img src="{{ url_for('static', filename='images/' + match.away_team.logo_url) }}"
+                    alt="{{ match.away_team.name }} Logo">
                 <div class="team-name">{{ match.home_team.name }}</div>
             </div>
         </div>
@@ -28,8 +29,8 @@
                 <span class="score-cirkel" id="lower-score-home">-</span>
             </div>
             <div style="width: 40%;">
-                 <span class="score-cirkel" id="add-score-away">+</span>
-                 <span class="score-cirkel" id="lower-score-away">-</span>
+                <span class="score-cirkel" id="add-score-away">+</span>
+                <span class="score-cirkel" id="lower-score-away">-</span>
             </div>
         </div>
         <div class="submit-prono">

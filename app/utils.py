@@ -19,5 +19,4 @@ def pred_by_id(match_id: int, user_id: int):
             Prediction.match_id == match_id, Prediction.user_id == user_id
         )
     )
-    print(pred)
     return pred

@@ -38,7 +38,7 @@ IncAwayScore.addEventListener("click", () => {
 document.getElementById("update-pronostiek").addEventListener("click", function() {
     const homeScore = parseInt(document.getElementById("home-score").innerText);
     const awayScore = parseInt(document.getElementById("away-score").innerText);
-    const pronoId = window.location.pathname.split("/").pop();
+    const pronoId = parseInt(document.getElementById("hidden_id").innerText);
 
     fetch(`/update_prono/${pronoId}`, {
         method: "POST",
@@ -47,5 +47,11 @@ document.getElementById("update-pronostiek").addEventListener("click", function(
             home_score: homeScore,
             away_score: awayScore
         })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = "/matches";
+        }
     });
 });
