@@ -50,7 +50,7 @@ def matches():
 
     return render_template(
         "matches.html",
-        title="Matches",
+        title="Wedstrijden",
         matches_done=matches_done,
         matches_not_done=matches_not_done,
     )
@@ -64,7 +64,7 @@ def stand():
         (postion, user.username, user.score, user.id)
         for postion, user in enumerate(users, start=1)
     ]
-    return render_template("stand.html", title="Home", scoreboard=scoreboard)
+    return render_template("stand.html", title="Stand", scoreboard=scoreboard)
 
 
 @app.route("/login", methods=["GET", "POST"])
