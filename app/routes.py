@@ -4,6 +4,8 @@ from app import app, db
 from app.models import User, Team, Match, Prediction
 from app.forms import LoginForm, TeamForm, AddMatchForm, EditMatchForm
 from app.utils import calculate_points, pred_by_id
+from datetime import datetime
+from pytz import timezone
 from flask_login import login_required, current_user, login_user, logout_user
 
 
@@ -15,7 +17,7 @@ def matches():
     matches_not_done_DB = db.session.scalars(
         sa.select(Match)
         .where(Match.match_done.is_(False))
-        .order_by(Match.match_date.desc())
+        .order_by(Match.match_date.asc())
     ).all()
     matches_done_DB = db.session.scalars(
         sa.select(Match)
@@ -62,7 +64,6 @@ def stand():
         (postion, user.username, user.score, user.id)
         for postion, user in enumerate(users, start=1)
     ]
-
     return render_template("stand.html", title="Home", scoreboard=scoreboard)
 
 
@@ -113,7 +114,7 @@ def edit_pronostiek(match_id):
             Prediction.match_id == match_id, Prediction.user_id == current_user.id
         )
     )
-    if own_pred is None:
+    if (own_pred is None) and (not match.match_done):
         # Aanmaken van een nieuwe voorspelling
         own_pred = Prediction(
             user_id=current_user.id,
@@ -143,6 +144,11 @@ def edit_pronostiek(match_id):
 
     # * Disable aanpassen indien bezig is (of gedaan is)
     # ? Hoe tijdzones behandelen?
+    local_tz = timezone('Europe/Brussels')
+    match_date = local_tz.localize(match.match_date)
+    match_bezig = True if (datetime.now(local_tz) >= match_date) else False
+    print(match_bezig)
+    pred_editbaar = not match_bezig and not match.match_done
 
     return render_template(
         "edit_pronostiek.html",
@@ -150,6 +156,7 @@ def edit_pronostiek(match_id):
         other_pred=others_pred,
         own_pred=own_pred,
         match=match,
+        edit=pred_editbaar
     )
 
 
@@ -309,14 +316,13 @@ def edit_match(match_id):
             match.home_score = form.homescore.data
             match.away_score = form.awayscore.data
             match.match_done = form.match_done.data
-            print(form.match_done.data)
             db.session.commit()
 
             flash(f"Match {match.home_team.name} vs {match.away_team.name} updated.")
 
-            if match.match_done and not done_before_submit:
-                flash("Leaderboard has been updated with after new result.")
-                calculate_points()
+            if match.match_done:
+                flash("Leaderboard has been updated after new result.")
+                calculate_points(match_id)
 
             return redirect(url_for("admin_matches"))
 

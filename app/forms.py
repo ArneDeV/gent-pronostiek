@@ -43,8 +43,8 @@ class AddMatchForm(FlaskForm):
 
 
 class EditMatchForm(FlaskForm):
-    homescore = IntegerField("Home team score", validators=[DataRequired()])
-    awayscore = IntegerField("Away team score", validators=[DataRequired()])
+    homescore = IntegerField("Home team score", validators=[])
+    awayscore = IntegerField("Away team score", validators=[])
     match_done = BooleanField("Match played")
     confirm_delete = BooleanField("Confirm deletion")
     submit = SubmitField("Update match")

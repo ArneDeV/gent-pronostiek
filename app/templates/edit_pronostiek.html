@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Edit pronostiek<span id="hidden_id">{{ own_pred.id }}</span></h1>
+<h1>Aanpassen pronostiek<span id="hidden_id">{{ own_pred.id }}</span></h1>
 <!-- Aanpassing pronostiek -->
 <div class="center-container">
     <div class="match-card">
+        {% if not match.match_done %}
         <div class="match-time">{{ match.match_date.strftime("%H:%M") }}</div>
         <div class="match-date">{{ match.match_date.strftime("%d/%m/%Y") }}</div>
         <div class="teams">
@@ -23,6 +24,7 @@
                 <div class="team-name">{{ match.home_team.name }}</div>
             </div>
         </div>
+        {% if edit %}
         <div class="aanpassen-score">
             <div style="width: 40%;">
                 <span class="score-cirkel" id="add-score-home">+</span>
@@ -36,8 +38,55 @@
         <div class="submit-prono">
             <button type="button" class="btn btn-outline-primary" id="update-pronostiek">Update Pronostiek</button>
         </div>
+        {% else %}
+        <div class="submit-prono">
+            <button type="button" class="btn btn-outline-secondary" id="update-pronostiek" disabled>MATCH BEZIG</button>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="match-prediction">
+            <span class="predict-text">PRONOSTIEK</span>
+            {% if own_pred is none %}
+            <span class="predict-score">_ - _</span>
+            {% else %}
+            <span class="predict-score">{{ own_pred.predicted_home_score }} - {{ own_pred.predicted_away_score }}</span>
+            {% endif %}
+
+            {% if own_pred is none %}
+            <span class="badge bg-danger badge-size">+0</span>
+            {% else %}
+            {% if own_pred.points_earned == 1 %}
+            <span class="badge bg-secondary badge-size">
+                {% elif own_pred.points_earned == 3 %}
+                <span class="badge bg-info badge-size">
+                {% elif own_pred.points_earned == 6 %}
+                <span class="badge bg-primary badge-size">
+                    {% elif own_pred.points_earned == 10 %}
+                    <span class="badge bg-success badge-size">
+                        {% endif %}
+                        +{{ own_pred.points_earned }}</span>
+                    {% endif %}
+        </div>
+        <hr>
+        <div class="match-time">{{ match.match_date.strftime("%H:%M") }}</div>
+        <div class="match-date">{{ match.match_date.strftime("%d/%m/%Y") }}</div>
+        <div class="teams">
+            <div class="team">
+                <img src="{{ url_for('static', filename='images/' + match.home_team.logo_url) }}"
+                    alt="{{ match.home_team.name }} Logo">
+                <div class="team-name">{{ match.home_team.name }}</div>
+            </div>
+            <div class="score">{{ match.home_score }} - {{ match.away_score }}</div>
+            <div class="team">
+                <img src="{{ url_for('static', filename='images/' + match.away_team.logo_url) }}"
+                    alt="{{ match.away_team.name }} logo">
+                <div class="team-name">{{ match.away_team.name }}</div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
+
 <hr>
 <table class="table table-bordered table-hover">
     <thead>
@@ -55,7 +104,17 @@
             <th scope="row">{{ username }}</th>
             <td>{{ pred_home_score }} - {{ pred_away_score }}</td>
             {% if match.match_done %}
-            <td>{{ score }}</td>
+            <td>{% if points_earned == 1 %}
+                <span class="badge bg-secondary badge-size">
+                    {% elif points_earned == 3 %}
+                    <span class="badge bg-info badge-size">
+                    {% elif points_earned == 6 %}
+                    <span class="badge bg-primary badge-size">
+                        {% elif points_earned == 10 %}
+                        <span class="badge bg-success badge-size">                            
+                            {% endif %}
+                            +{{ points_earned }}</span>
+            </td>
             {% endif %}
         </tr>
         {% endfor %}
