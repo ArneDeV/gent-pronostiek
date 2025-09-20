@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Edit pronostiek</h1>
+<!-- Aanpassing pronostiek -->
+<div class="center-container">
+    <div class="match-card">
+        <div class="match-time">{{ match.match_date.strftime("%H:%M") }}</div>
+        <div class="match-date">{{ match.match_date.strftime("%d/%m/%Y") }}</div>
+        <div class="teams">
+            <div class="team">
+                <img src="{{ url_for('static', filename='images/' + match.home_team.logo_url) }}"
+                    alt="{{ match.home_team.name }} Logo">
+                <div class="team-name">{{ match.home_team.name }}</div>
+            </div>
+            <div class="score">
+                <span id="home-score">{{ own_pred.predicted_home_score }}</span>
+                <span> - </span>
+                <span id="away-score">{{ own_pred.predicted_away_score }}</span>
+            </div>
+            <div class="team">
+                <img src="{{ url_for('static', filename='images/' + match.away_team.logo_url) }}" alt="{{ match.away_team.name }} Logo">
+                <div class="team-name">{{ match.home_team.name }}</div>
+            </div>
+        </div>
+        <div class="aanpassen-score">
+            <div style="width: 40%;">
+                <span class="score-cirkel" id="add-score-home">+</span>
+                <span class="score-cirkel" id="lower-score-home">-</span>
+            </div>
+            <div style="width: 40%;">
+                 <span class="score-cirkel" id="add-score-away">+</span>
+                 <span class="score-cirkel" id="lower-score-away">-</span>
+            </div>
+        </div>
+        <div class="submit-prono">
+            <button type="button" class="btn btn-outline-primary" id="update-pronostiek">Update Pronostiek</button>
+        </div>
+    </div>
+</div>
+<hr>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr class="table-active">
+            <th scope="col">Naam</th>
+            <th scope="col">Pronostiek</th>
+            {% if match.match_done %}
+            <th scope="col">Verdiende punten</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for (username, pred_home_score, pred_away_score, points_earned) in other_pred %}
+        <tr>
+            <th scope="row">{{ username }}</th>
+            <td>{{ pred_home_score }} - {{ pred_away_score }}</td>
+            {% if match.match_done %}
+            <td>{{ score }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script src="{{ url_for('static', filename='prono.js')}}"></script>
+{% endblock %}

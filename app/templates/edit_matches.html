@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Admin panel</h1>
+<h2>Edit matches</h2>
+<hr>
+<h4>{{ match.home_team.name }} - {{ match.away_team.name }} op {{ match.match_date }}</h4>
+<form action="" method="post">
+{{ form.hidden_tag()}}
+<p>
+    {{form.homescore.label}}:
+    {{form.homescore()}}<br>
+    {% for error in form.homescore.errors %}
+    <span style="color: red";>[{{ error }}]</span>
+    {% endfor %}
+    </p>
+
+    <p>
+    {{form.awayscore.label}}: 
+    {{form.awayscore()}}<br>
+    {% for error in form.awayscore.errors %}
+    <span style="color: red";>[{{ error }}]</span>
+    {% endfor %}
+</p>
+    <p>
+        {{ form.match_done.label}}:
+        {{ form.match_done()}}<br>
+        {% for error in form.match_done.errors %}
+        <span style="color: red";>[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.submit() }}<br>
+    </p>
+    <p>
+        {{ form.confirm_delete.label}}:
+        {{ form.confirm_delete()}}
+        {{ form.delete() }}<br>
+        {% for error in form.confirm_delete.errors %}
+        <span style="color: red";>{{ error }}]</span>
+        {% endfor %}
+    </p>
+</form>
+<hr>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import "bootstrap_wtf.html" as wtf %}
+
+{% block content %}
+<h1>Admin panel</h1>
+<h2>Manage Users</h2>
+<table id="admin_users">
+    <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Actual Score</th>
+        <th>New Score</th>
+        <th>Change Score</th>
+        <th>Delete User</th>
+    </tr>
+    {% for id, username, score in users %}
+    <tr>
+        <form method="post" action="">
+            <td><input type="hidden" name="user_id" value="{{ id }}">{{ id }}</td>
+            <td>{{ username }}</td>
+            <td>{{ score }}</td>            
+            <td><input type="text" name="new_score" placeholder="New Score"></td>
+            <td><input type="submit" name="action" value="change_score" class="btn btn-outline-primary ms-3"></td>
+            <td><input type="checkbox" name="delete" id="delete"><button type="submit" class="btn btn-danger ms-3">Delete</button></td>
+        </form>
+    </tr>
+    {% endfor %}
+</table>
+<hr>
+<h2>Manage Teams</h2>
+{{ wtf.quick_form(team_form, novalidate=True) }}
+{% endblock %}

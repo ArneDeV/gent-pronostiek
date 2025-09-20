@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% import "bootstrap_wtf.html" as wtf %}
+
+
+{% block content %}
+<h2>Add new Match</h2>
+{{ wtf.quick_form(form) }}
+<hr>
+<h2>Manage matches</h2>
+<table>
+    <tr>
+        <td>Match ID</td>
+        <td>Date</td>
+        <td>Match</td>
+        <td>Score</td>
+        <td>Match Done</td>
+        <td>Edit</td>
+    </tr>
+    {% for id, home_team, away_team, match_date, home_score, away_score, match_done in matches %}
+    <tr>
+        <td>{{ id }}</td>
+        <td>{{ match_date }}</td>
+        <td>{{ home_team.name }} - {{ away_team.name }}</td>
+        <td>{{ home_score }} - {{ away_score }} </td>
+        <td>{{ match_done }}</td>
+        <td><a href="{{ url_for('edit_match', match_id=id)}}" class="btn btn-outline-primary">Edit</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

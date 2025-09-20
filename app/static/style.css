@@ -1,0 +1,126 @@
+.match-card {
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 750px;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.match-date {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.match-time {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.teams {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+.team img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.team-name {
+    font-size: 16px;
+    font-weight: bold;
+    color:#0d6efd;
+}
+
+.score {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    user-select: none;
+}
+
+.match-link {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    /* optional, for spacing from top */
+}
+
+.badge-size {
+    font-size: 2em;
+    text-align: center;
+    width: 10%;
+}
+
+.match-prediction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.predict-text {
+    align-items: center;
+    color: #777;
+    font-size: 1.2rem;
+    width: 10%;
+}
+
+.predict-score {
+    align-items: center;
+    text-align: center;
+    font-size: 28px;
+}
+
+.placeholder-predict {
+    width: 10%;
+}
+
+.aanpassen-score {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+    user-select: none;
+}
+
+.aanpassen-score:hover {
+    cursor: pointer;
+}
+
+.score-cirkel {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    align-items: center;
+    background: #007bff; /* 0d6efd */
+    display: inline-block;
+    font-size: 1.3rem;
+    margin-right: 10px;
+}

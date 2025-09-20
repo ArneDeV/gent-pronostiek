@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Toekomstige wedstrijden</h2>
+
+{% for match in matches_not_done %}
+<div class="center-container">
+    <div class="match-card">
+        <a href="{{ url_for('edit_pronostiek', match_id=match[0]) }}" class="match-link">
+            <div class="match-prediction">
+                <span class="predict-text">PRONOSTIEK </span>
+                
+                <span class="predict-score">
+                    {% if match[4] != None %}
+                    {{ match[4].predicted_home_score }} - {{ match[4].predicted_away_score }}
+                    {% else %}
+                    _ - _
+                    {% endif %}
+                </span>
+                
+                <span class="badge-size"></span>
+            </div>  
+            <hr>
+            <div class="match-date">{{ match[1].strftime("%d/%m/%Y") }}</div>
+            <div class="teams">
+                <div class="team">
+                    <img src="{{ url_for('static', filename='images/' + match[2].logo_url) }}"
+                        alt="{{ match[2].name }} Logo">
+                    <div class="team-name">{{ match[2].name }}</div>
+                </div>
+                <div class="score">{{ match[1].strftime("%H:%M") }}</div>
+                <div class="team">
+                    <img src="{{ url_for('static', filename='images/' + match[3].logo_url) }}"
+                        alt="{{ match[3].name }} logo">
+                    <div class="team-name">{{ match[3].name }}</div>
+                </div>
+            </div>       
+        </a>
+    </div>
+</div>
+{% endfor %}
+
+<hr>
+<h2>Afgelopen wedstrijden</h2>
+{% for match in matches_done %}
+<div class="center-container">
+    <div class="match-card">
+        <a href="#" class="match-link">
+            <div class="match-prediction">
+                <span class="predict-text">{{ match[6].predicted_home_score }} - {{ match[6].predicted_away_score }} </span>
+                <span class="predict-score">1 - 2</span>
+                <span class="badge bg-success badge-size">+10</span>
+            </div>
+            <hr>
+            <div class="match-time">{{ match[1].strftime("%H:%M") }}</div>
+            <div class="match-date">{{ match[1].strftime("%d/%m/%Y") }}</div>
+            <div class="teams">
+                <div class="team">
+                    <img src="{{ url_for('static', filename='images/' + match[2].logo_url) }}"
+                        alt="{{ match[2].name }} Logo">
+                    <div class="team-name">{{ match[2].name }}</div>
+                </div>
+                <div class="score">{{ match[4] }} - {{ match[5] }}</div>
+                <div class="team">
+                    <img src="{{ url_for('static', filename='images/' + match[3].logo_url) }}"
+                        alt="{{ match[3].name }} logo">
+                    <div class="team-name">{{ match[3].name }}</div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
