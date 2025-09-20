@@ -14,7 +14,7 @@ class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), unique=True, index=True)
     score: so.Mapped[int] = so.mapped_column(default=0)
-    isAdmin: so.Mapped[bool] = so.mapped_column(default=True)
+    isAdmin: so.Mapped[bool] = so.mapped_column(default=False)
     # ! geen actuele field maar verwijzing naar de relatie in de prediction map
     predictions: so.WriteOnlyMapped["Prediction"] = so.relationship(
         back_populates="user", cascade="all, delete-orphan", passive_deletes=True
