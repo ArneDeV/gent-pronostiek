@@ -1,19 +1,19 @@
 import sqlalchemy as sa
 from app import db
-from app.models import Prediction
+from app.models import Prediction, Match
 
 def calculate_points(match_id: int):
     print("Hier moeten de punten nog berekend worden")
 
     # Stap 1: Ophalen alle predictions horende bij de match
-    #match = db.session.get(Match, match_id)
+    match = db.session.get(Match, match_id)
     predictions = db.session.scalars(
         sa.select(Prediction).where(Prediction.match_id == match_id)
     ).all()
     
     # buitenFor aangezien dit zelfde is voro elke prediction
-    match_home = predictions[0].predicted_match.home_score
-    match_away = predictions[0].predicted_match.away_score
+    match_home = match.home_score
+    match_away = match.away_score
     match_GD = match_home - match_away
     for prediction in predictions:
         pred_GD = prediction.predicted_home_score - prediction.predicted_away_score
