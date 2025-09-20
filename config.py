@@ -1,4 +1,6 @@
 import os
+from dotenv import load_dotenv
+load_dotenv(dotenv_path="/home/ArneDeV/gent-pronostiek/.env")  # Load early!
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

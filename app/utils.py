@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 from app import db
-from app.models import Prediction, Match
+from app.models import Prediction
 
 def calculate_points(match_id: int):
     print("Hier moeten de punten nog berekend worden")

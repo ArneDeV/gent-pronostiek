@@ -311,8 +311,6 @@ def edit_match(match_id):
                 return redirect(url_for("edit_match", match_id=match_id))
         # Handle aanpassen score / match done
         if form.submit.data:
-            done_before_submit = match.match_done
-
             match.home_score = form.homescore.data
             match.away_score = form.awayscore.data
             match.match_done = form.match_done.data
