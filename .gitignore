@@ -8,5 +8,5 @@ wheels/
 *.db
 
 # Virtual environments
-.venv
+app.db
 migrations/
