@@ -5,8 +5,8 @@ build/
 dist/
 wheels/
 *.egg-info
-app.db
+*.db
 
 # Virtual environments
 .venv
-/migrations
+migrations/
