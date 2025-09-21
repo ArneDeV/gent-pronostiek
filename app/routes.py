@@ -82,6 +82,7 @@ def login():
             db.session.add(user)
             db.session.commit()
             flash(f"New user <{username_upper}> is created!")
+            return redirect(url_for("login"))
 
         user = db.session.scalar(sa.select(User).where(User.username == username_upper))
         if user is None:
