@@ -106,13 +106,13 @@
             <td>{{ pred_home_score }} - {{ pred_away_score }}</td>
             {% if match.match_done %}
             <td>{% if points_earned == 1 %}
-                <span class="badge bg-secondary badge-size">
+                <span class="badge bg-secondary">
                     {% elif points_earned == 3 %}
-                    <span class="badge bg-info badge-size">
+                    <span class="badge bg-info">
                     {% elif points_earned == 6 %}
-                    <span class="badge bg-primary badge-size">
+                    <span class="badge bg-primary">
                         {% elif points_earned == 10 %}
-                        <span class="badge bg-success badge-size">                            
+                        <span class="badge bg-success">                            
                             {% endif %}
                             +{{ points_earned }}</span>
             </td>

@@ -70,9 +70,10 @@
 }
 
 .badge-size {
-    font-size: 2em;
+    font-size: 1.2rem;
     text-align: center;
-    width: 10%;
+    padding: 10px, 7px, 10px, 10px;
+    width: 15%;
 }
 
 .match-prediction {
@@ -86,7 +87,7 @@
     align-items: center;
     color: #777;
     font-size: 1.2rem;
-    width: 10%;
+    width: 15%;
 }
 
 .predict-score {
