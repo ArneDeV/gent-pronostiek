@@ -81,7 +81,7 @@ def login():
             user = User(username=username_upper)
             db.session.add(user)
             db.session.commit()
-            flash(f"New user <{username_upper}> is created!")
+            flash(f"Niewe gebruiker <{username_upper}> is aangemaakt!")
             return redirect(url_for("login"))
 
         user = db.session.scalar(sa.select(User).where(User.username == username_upper))
